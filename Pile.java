@@ -8,6 +8,17 @@ public class Pile
         this.pile = new Card[0];
     }
 
+    /**
+     * @return the size of the pile
+     */
+    public int size() {
+        return this.pile.length;
+    }
+
+    public Card get(int index) {
+        return this.pile[index];
+    }
+
     public Card append(Card c) {
         Card[] temp = new Card[this.pile.length + 1];
         for(int i = 0; i < this.pile.length; i++) {
@@ -90,6 +101,15 @@ public class Pile
                 return ret;
             }
             ret++;
+        }
+        return ret;
+    }
+    
+    @Override
+    public String toString() {
+        String ret = this.pile[0].toString();
+        for (int i = 1; i < this.size(); i++) {
+            ret += ", " + this.pile[i].toString();
         }
         return ret;
     }

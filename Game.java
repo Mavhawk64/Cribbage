@@ -95,7 +95,8 @@ public class Game
             // and the pegging phase begins
             while(this.deck.playersStillHaveCards() && !this.board.isGameOver()) {
                 boolean goEnd = true;
-                for(int i = (crib_owner + 1) % this.players; i < this.players; i++) {
+                for(int x = 0; x < this.players; x++) {
+                    int i = (x + crib_owner + 1) % this.players;
                     // If the player has no cards, skip them
                     if(this.deck.hands[i].size() == 0) {
                         continue;

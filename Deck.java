@@ -114,7 +114,7 @@ public class Deck
     public boolean playCpuCard() {
         System.out.println("The total value of the pile is " + this.pile.totalValue() + ".");
         int cpu = this.hands.length - 1;
-        Hand validCards = new Hand(0);
+        Pile validCards = new Pile();
         for(int i = 0; i < this.hands[cpu].size(); i++) {
             if(this.hands[cpu].hand[i].value + this.pile.totalValue() <= 31) {
                 validCards.append(this.hands[cpu].hand[i]);
@@ -125,9 +125,9 @@ public class Deck
             return false;
         }
         int input = (int)(Math.random() * validCards.size()) + 1;
-        System.out.println("Player " + (cpu + 1) + " played the " + validCards.hand[input - 1].toString());
-        this.pile.append(validCards.hand[input - 1]);
-        this.hands[cpu].remove(validCards.hand[input - 1]);
+        System.out.println("Player " + (cpu + 1) + " played the " + validCards.get(input-1).toString());
+        this.pile.append(validCards.get(input-1));
+        this.hands[cpu].remove(validCards.get(input - 1));
         this.hands[cpu].removeNulls();
         return true;
     }
@@ -135,7 +135,7 @@ public class Deck
     public boolean playPlayerCard(int id) {
         System.out.println("Player " + (id + 1) + ": " + this.hands[id].toString());
         System.out.println("The total value of the pile is " + this.pile.totalValue() + ".");
-        Hand validCards = new Hand(0);
+        Pile validCards = new Pile();
         for(int i = 0; i < this.hands[id].size(); i++) {
             if(this.hands[id].hand[i].value + this.pile.totalValue() <= 31) {
                 validCards.append(this.hands[id].hand[i]);
@@ -157,9 +157,9 @@ public class Deck
             input = sc.nextInt();
         }
         sc.close();
-        System.out.println("Player " + (id + 1) + " played the " + validCards.hand[input - 1].toString());
-        this.pile.append(validCards.hand[input - 1]);
-        this.hands[id].remove(validCards.hand[input - 1]);
+        System.out.println("Player " + (id + 1) + " played the " + validCards.get(input-1).toString());
+        this.pile.append(validCards.get(input-1));
+        this.hands[id].remove(validCards.get(input-1));
         this.hands[id].removeNulls();
         return true;
     }
