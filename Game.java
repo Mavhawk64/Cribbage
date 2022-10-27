@@ -1,4 +1,4 @@
-package Cribbage;
+package Cribbage.Cribbage;
 
 public class Game
 {
@@ -122,7 +122,7 @@ public class Game
                     // they can continue the sum to gain any extra points, and upon reaching or breaching 31,
                     // they gain their points, and the next player plays at 0.
                     if(!canPlay) {
-                        this.board.addScore((i - 1) % this.players, 1);
+                        this.board.addScore(((i - 1) % this.players + this.players) % this.players, 1);
                         if(this.board.isGameOver()) {
                             return;
                         }

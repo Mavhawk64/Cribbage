@@ -1,4 +1,4 @@
-package Cribbage;
+package Cribbage.Cribbage;
 
 public class Board
 {

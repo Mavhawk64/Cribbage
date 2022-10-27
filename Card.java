@@ -1,4 +1,4 @@
-package Cribbage;
+package Cribbage.Cribbage;
 /**
  * The Card class is just a simple class to determine the type of card.
  * Properties include suit, rank, and value

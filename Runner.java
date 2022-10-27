@@ -1,4 +1,4 @@
-package Cribbage;
+package Cribbage.Cribbage;
 
 /**
  * The Runner for the Cribbage game.
