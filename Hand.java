@@ -1,4 +1,5 @@
-package Cribbage.Cribbage;
+package Cribbage;
+
 import java.util.*;
 
 /**
@@ -7,8 +8,7 @@ import java.util.*;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Hand
-{
+public class Hand {
     private Random rand;
     public Card[] hand;
     private Card start;
@@ -18,8 +18,7 @@ public class Hand
     /**
      * Constructor for objects of class Hand
      */
-    public Hand(int amt_cards)
-    {
+    public Hand(int amt_cards) {
         this.rand = new Random();
         this.hand = new Card[amt_cards];
         this.size = 0;
@@ -45,7 +44,7 @@ public class Hand
 
     public void DrawCard(Card[] deck) {
         int x = this.rand.nextInt(52);
-        while(deck[x] == null) {
+        while (deck[x] == null) {
             x = this.rand.nextInt(52);
         }
         this.hand[this.size++] = new Card(deck[x].suit, deck[x].rank, deck[x].value);
@@ -53,11 +52,11 @@ public class Hand
     }
 
     private void sortHand() {
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = 0; j < this.hand.length - 1; j++) {
-                if(this.hand[j].rink > this.hand[j + 1].rink) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = 0; j < this.hand.length - 1; j++) {
+                if (this.hand[j].rink > this.hand[j + 1].rink) {
                     Card temp = new Card(this.hand[j].suit, this.hand[j].rank, this.hand[j].value);
-                    this.hand[j] = new Card(this.hand[j + 1].suit,this.hand[j + 1].rank,this.hand[j + 1].value);
+                    this.hand[j] = new Card(this.hand[j + 1].suit, this.hand[j + 1].rank, this.hand[j + 1].value);
                     this.hand[j + 1] = temp;
                 }
             }
@@ -83,12 +82,12 @@ public class Hand
             System.out.println(h.toString() + " makes 15 for " + total + " points!");
         }
 
-        for(Hand h : fif4) {
+        for (Hand h : fif4) {
             total += 2;
             System.out.println(h.toString() + " makes 15 for " + total + " points!");
         }
 
-        if(fif5 != null) {
+        if (fif5 != null) {
             total += 2;
             System.out.println(fif5.toString() + " makes 15 for " + total + " points!");
         }
@@ -162,7 +161,7 @@ public class Hand
         if (nobs != null) {
             total += 1;
             String s = "His Nobs! " + nobs.toString() + " makes " + total + " point";
-            if(total > 1) {
+            if (total > 1) {
                 s += "s";
             }
             s += "!";
@@ -189,20 +188,23 @@ public class Hand
         Hand threes = this.getThreeOfAKind();
         Hand four = this.getFourOfAKind();
 
-        /* Can't count a pair and a triple or quadruple together. Subsets (pairs or triples) must be removed. */
-        if(four != null) {
+        /*
+         * Can't count a pair and a triple or quadruple together. Subsets (pairs or
+         * triples) must be removed.
+         */
+        if (four != null) {
             total += 12;
             pairs = null;
-        } else if(threes != null) {
+        } else if (threes != null) {
             total += 6;
-            for(int i = 0; i < pairs.size(); i++) {
-                if(pairs.get(i).hand[0].rank.equals(threes.hand[0].rank)) {
+            for (int i = 0; i < pairs.size(); i++) {
+                if (pairs.get(i).hand[0].rank.equals(threes.hand[0].rank)) {
                     pairs.remove(i);
                     break;
                 }
             }
         }
-        if(pairs != null) {
+        if (pairs != null) {
             total += pairs.size() * 2;
         }
 
@@ -212,11 +214,11 @@ public class Hand
         Hand run5 = this.getRunOfFiveCards();
 
         /* run5 > run4 > run3 precedence */
-        if(run5 != null) {
+        if (run5 != null) {
             total += 5;
-        } else if(run4.size() > 0) {
+        } else if (run4.size() > 0) {
             total += 4 * run4.size();
-        } else if(run3.size() > 0) {
+        } else if (run3.size() > 0) {
             total += 3 * run3.size();
         }
 
@@ -230,16 +232,16 @@ public class Hand
         Card nobs = this.getHisNobs();
 
         total += nobs == null ? 0 : 1;
-    
+
         return total;
     }
 
     private ArrayList<Hand> getFifteensOfTwoCards() {
         ArrayList<Hand> fifteens = new ArrayList<Hand>();
         // Check within the hand
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                if(this.hand[i].value + this.hand[j].value == 15) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                if (this.hand[i].value + this.hand[j].value == 15) {
                     fifteens.add(new Hand(2));
                     fifteens.get(fifteens.size() - 1).hand[0] = this.hand[i];
                     fifteens.get(fifteens.size() - 1).hand[1] = this.hand[j];
@@ -247,8 +249,8 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            if(this.hand[i].value + this.start.value == 15) {
+        for (int i = 0; i < this.hand.length; i++) {
+            if (this.hand[i].value + this.start.value == 15) {
                 fifteens.add(new Hand(2));
                 fifteens.get(fifteens.size() - 1).hand[0] = this.hand[i];
                 fifteens.get(fifteens.size() - 1).hand[1] = this.start;
@@ -260,10 +262,10 @@ public class Hand
     private ArrayList<Hand> getFifteensOfThreeCards() {
         ArrayList<Hand> fifteens = new ArrayList<Hand>();
         // Check within the hand
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
-                    if(this.hand[i].value + this.hand[j].value + this.hand[k].value == 15) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
+                    if (this.hand[i].value + this.hand[j].value + this.hand[k].value == 15) {
                         fifteens.add(new Hand(3));
                         fifteens.get(fifteens.size() - 1).hand[0] = this.hand[i];
                         fifteens.get(fifteens.size() - 1).hand[1] = this.hand[j];
@@ -273,9 +275,9 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                if(this.hand[i].value + this.hand[j].value + this.start.value == 15) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                if (this.hand[i].value + this.hand[j].value + this.start.value == 15) {
                     fifteens.add(new Hand(3));
                     fifteens.get(fifteens.size() - 1).hand[0] = this.hand[i];
                     fifteens.get(fifteens.size() - 1).hand[1] = this.hand[j];
@@ -289,11 +291,11 @@ public class Hand
     private ArrayList<Hand> getFifteensOfFourCards() {
         ArrayList<Hand> fifteens = new ArrayList<Hand>();
         // Check within the hand
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
-                    for(int l = k + 1; l < this.hand.length; l++) {
-                        if(this.hand[i].value + this.hand[j].value + this.hand[k].value + this.hand[l].value == 15) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
+                    for (int l = k + 1; l < this.hand.length; l++) {
+                        if (this.hand[i].value + this.hand[j].value + this.hand[k].value + this.hand[l].value == 15) {
                             fifteens.add(new Hand(4));
                             fifteens.get(fifteens.size() - 1).hand[0] = this.hand[i];
                             fifteens.get(fifteens.size() - 1).hand[1] = this.hand[j];
@@ -305,10 +307,10 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
-                    if(this.hand[i].value + this.hand[j].value + this.hand[k].value + this.start.value == 15) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
+                    if (this.hand[i].value + this.hand[j].value + this.hand[k].value + this.start.value == 15) {
                         fifteens.add(new Hand(4));
                         fifteens.get(fifteens.size() - 1).hand[0] = this.hand[i];
                         fifteens.get(fifteens.size() - 1).hand[1] = this.hand[j];
@@ -322,7 +324,8 @@ public class Hand
     }
 
     private Hand getFifteenOfFiveCards() {
-        if(this.hand.length == 4 && this.hand[0].value + this.hand[1].value + this.hand[2].value + this.hand[3].value + this.start.value == 15) {
+        if (this.hand.length == 4 && this.hand[0].value + this.hand[1].value + this.hand[2].value + this.hand[3].value
+                + this.start.value == 15) {
             Hand fifteen = new Hand(5);
             fifteen.hand[0] = this.hand[0];
             fifteen.hand[1] = this.hand[1];
@@ -337,9 +340,9 @@ public class Hand
     private ArrayList<Hand> getPairs() {
         ArrayList<Hand> pairs = new ArrayList<Hand>();
         // Check within the hand
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                if(this.hand[i].rink == this.hand[j].rink) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                if (this.hand[i].rink == this.hand[j].rink) {
                     pairs.add(new Hand(2));
                     pairs.get(pairs.size() - 1).hand[0] = this.hand[i];
                     pairs.get(pairs.size() - 1).hand[1] = this.hand[j];
@@ -347,8 +350,8 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            if(this.hand[i].rink == this.start.rink) {
+        for (int i = 0; i < this.hand.length; i++) {
+            if (this.hand[i].rink == this.start.rink) {
                 pairs.add(new Hand(2));
                 pairs.get(pairs.size() - 1).hand[0] = this.hand[i];
                 pairs.get(pairs.size() - 1).hand[1] = this.start;
@@ -359,10 +362,10 @@ public class Hand
 
     private Hand getThreeOfAKind() {
         // Check within the hand
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
-                    if(this.hand[i].rink == this.hand[j].rink && this.hand[j].rink == this.hand[k].rink) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
+                    if (this.hand[i].rink == this.hand[j].rink && this.hand[j].rink == this.hand[k].rink) {
                         Hand threeOfAKind = new Hand(3);
                         threeOfAKind.hand[0] = this.hand[i];
                         threeOfAKind.hand[1] = this.hand[j];
@@ -373,9 +376,9 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                if(this.hand[i].rink == this.hand[j].rink && this.hand[j].rink == this.start.rink) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                if (this.hand[i].rink == this.hand[j].rink && this.hand[j].rink == this.start.rink) {
                     Hand threeOfAKind = new Hand(3);
                     threeOfAKind.hand[0] = this.hand[i];
                     threeOfAKind.hand[1] = this.hand[j];
@@ -389,7 +392,8 @@ public class Hand
 
     private Hand getFourOfAKind() {
         // Check within the hand
-        if(this.hand.length == 4 && this.hand[0].rink == this.hand[1].rink && this.hand[1].rink == this.hand[2].rink && this.hand[2].rink == this.hand[3].rink) {
+        if (this.hand.length == 4 && this.hand[0].rink == this.hand[1].rink && this.hand[1].rink == this.hand[2].rink
+                && this.hand[2].rink == this.hand[3].rink) {
             Hand fourOfAKind = new Hand(4);
             fourOfAKind.hand[0] = this.hand[0];
             fourOfAKind.hand[1] = this.hand[1];
@@ -399,9 +403,10 @@ public class Hand
         }
         // Check with the start card
         for (int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
-                    if(this.hand[i].rink == this.hand[j].rink && this.hand[j].rink == this.hand[k].rink && this.hand[k].rink == this.start.rink) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
+                    if (this.hand[i].rink == this.hand[j].rink && this.hand[j].rink == this.hand[k].rink
+                            && this.hand[k].rink == this.start.rink) {
                         Hand fourOfAKind = new Hand(4);
                         fourOfAKind.hand[0] = this.hand[i];
                         fourOfAKind.hand[1] = this.hand[j];
@@ -419,11 +424,11 @@ public class Hand
         // 4,5,6
         ArrayList<Hand> runs = new ArrayList<Hand>();
         // Check within the hand
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
                     // Case 0: hand, hand, hand
-                    if((this.hand[i].rink + 1 == this.hand[j].rink && this.hand[j].rink + 1 == this.hand[k].rink)) {
+                    if ((this.hand[i].rink + 1 == this.hand[j].rink && this.hand[j].rink + 1 == this.hand[k].rink)) {
                         runs.add(new Hand(3));
                         runs.get(runs.size() - 1).hand[0] = this.hand[i];
                         runs.get(runs.size() - 1).hand[1] = this.hand[j];
@@ -433,14 +438,14 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
                 Hand temp = new Hand(3);
                 temp.hand[0] = this.hand[i];
                 temp.hand[1] = this.hand[j];
                 temp.hand[2] = this.start;
                 temp.sortHand();
-                if(temp.hand[0].rink + 1 == temp.hand[1].rink && temp.hand[1].rink + 1 == temp.hand[2].rink) {
+                if (temp.hand[0].rink + 1 == temp.hand[1].rink && temp.hand[1].rink + 1 == temp.hand[2].rink) {
                     runs.add(temp);
                 }
             }
@@ -452,9 +457,10 @@ public class Hand
         // 4,5,6,7
         ArrayList<Hand> runs = new ArrayList<Hand>();
         // Check within the hand
-        if(this.hand.length == 4) {
+        if (this.hand.length == 4) {
             // Case 0: hand, hand, hand, hand
-            if(this.hand[0].rink + 1 == this.hand[1].rink && this.hand[1].rink + 1 == this.hand[2].rink && this.hand[2].rink + 1 == this.hand[3].rink) {
+            if (this.hand[0].rink + 1 == this.hand[1].rink && this.hand[1].rink + 1 == this.hand[2].rink
+                    && this.hand[2].rink + 1 == this.hand[3].rink) {
                 runs.add(new Hand(4));
                 runs.get(runs.size() - 1).hand[0] = this.hand[0];
                 runs.get(runs.size() - 1).hand[1] = this.hand[1];
@@ -463,16 +469,17 @@ public class Hand
             }
         }
         // Check with the start card
-        for(int i = 0; i < this.hand.length; i++) {
-            for(int j = i + 1; j < this.hand.length; j++) {
-                for(int k = j + 1; k < this.hand.length; k++) {
+        for (int i = 0; i < this.hand.length; i++) {
+            for (int j = i + 1; j < this.hand.length; j++) {
+                for (int k = j + 1; k < this.hand.length; k++) {
                     Hand temp = new Hand(4);
                     temp.hand[0] = this.hand[i];
                     temp.hand[1] = this.hand[j];
                     temp.hand[2] = this.hand[k];
                     temp.hand[3] = this.start;
                     temp.sortHand();
-                    if(temp.hand[0].rink + 1 == temp.hand[1].rink && temp.hand[1].rink + 1 == temp.hand[2].rink && temp.hand[2].rink + 1 == temp.hand[3].rink) {
+                    if (temp.hand[0].rink + 1 == temp.hand[1].rink && temp.hand[1].rink + 1 == temp.hand[2].rink
+                            && temp.hand[2].rink + 1 == temp.hand[3].rink) {
                         runs.add(temp);
                     }
                 }
@@ -490,15 +497,17 @@ public class Hand
         run.hand[2] = this.hand[2];
         run.hand[3] = this.hand[3];
         run.hand[4] = this.start;
-        run.sortHand(); 
-        if(run.hand[0].rink + 1 == run.hand[1].rink && run.hand[1].rink + 1 == run.hand[2].rink && run.hand[2].rink + 1 == run.hand[3].rink && run.hand[3].rink + 1 == run.hand[4].rink) {
+        run.sortHand();
+        if (run.hand[0].rink + 1 == run.hand[1].rink && run.hand[1].rink + 1 == run.hand[2].rink
+                && run.hand[2].rink + 1 == run.hand[3].rink && run.hand[3].rink + 1 == run.hand[4].rink) {
             return run;
         }
         return null;
     }
 
     private Hand getFlushOfFourCards() {
-        if(this.hand.length == 4 && this.hand[0].suit == this.hand[1].suit && this.hand[1].suit == this.hand[2].suit && this.hand[2].suit == this.hand[3].suit) {
+        if (this.hand.length == 4 && this.hand[0].suit == this.hand[1].suit && this.hand[1].suit == this.hand[2].suit
+                && this.hand[2].suit == this.hand[3].suit) {
             Hand flush = new Hand(4);
             flush.hand[0] = this.hand[0];
             flush.hand[1] = this.hand[1];
@@ -510,7 +519,8 @@ public class Hand
     }
 
     private Hand getFlushOfFiveCards() {
-        if(this.hand.length == 4 && this.hand[0].suit == this.hand[1].suit && this.hand[1].suit == this.hand[2].suit && this.hand[2].suit == this.hand[3].suit && this.hand[3].suit == this.start.suit) {
+        if (this.hand.length == 4 && this.hand[0].suit == this.hand[1].suit && this.hand[1].suit == this.hand[2].suit
+                && this.hand[2].suit == this.hand[3].suit && this.hand[3].suit == this.start.suit) {
             Hand flush = new Hand(5);
             flush.hand[0] = this.hand[0];
             flush.hand[1] = this.hand[1];
@@ -523,8 +533,8 @@ public class Hand
     }
 
     private Card getHisNobs() {
-        for(int i = 0; i < this.hand.length; i++) {
-            if(this.hand[i].rank.equals("Jack") && this.hand[i].suit.equals(this.start.suit)) {
+        for (int i = 0; i < this.hand.length; i++) {
+            if (this.hand[i].rank.equals("Jack") && this.hand[i].suit.equals(this.start.suit)) {
                 return this.hand[i];
             }
         }
@@ -537,17 +547,17 @@ public class Hand
 
     public Card append(Card c) {
         Card[] new_hand = new Card[this.hand.length + 1];
-        for(int i = 0; i < this.hand.length; i++) {
+        for (int i = 0; i < this.hand.length; i++) {
             new_hand[i] = this.hand[i];
         }
         new_hand[new_hand.length - 1] = new Card(c.suit, c.rank, c.value);
         this.hand = new_hand;
         return c;
     }
-    
+
     public Card remove(Card c) {
-        for(int i = 0; i < this.hand.length; i++) {
-            if(this.hand[i].rank.equals(c.rank) && this.hand[i].suit.equals(c.suit)) {
+        for (int i = 0; i < this.hand.length; i++) {
+            if (this.hand[i].rank.equals(c.rank) && this.hand[i].suit.equals(c.suit)) {
                 this.hand[i] = null;
                 return c;
             }
@@ -560,20 +570,20 @@ public class Hand
         this.size = this.hand.length;
     }
 
-    public int size() { 
-        if(this.hand == null) {
+    public int size() {
+        if (this.hand == null) {
             return 0;
         }
-        if(this.hand.length < this.size) {
+        if (this.hand.length < this.size) {
             this.size = this.hand.length;
         }
-        return this.size; 
+        return this.size;
     }
 
     public Hand copy() {
         Hand copy = new Hand(this.size());
-        for(int i = 0; i < this.size(); i++) {
-            copy.hand[i] = new Card(this.hand[i].suit,this.hand[i].rank,this.hand[i].value);
+        for (int i = 0; i < this.size(); i++) {
+            copy.hand[i] = new Card(this.hand[i].suit, this.hand[i].rank, this.hand[i].value);
         }
         return copy;
     }
@@ -581,7 +591,7 @@ public class Hand
     @Override
     public String toString() {
         String ret = this.hand[0].toString();
-        for(int i = 1; i < this.size(); i++) {
+        for (int i = 1; i < this.size(); i++) {
             ret += ", " + this.hand[i].toString();
         }
         return ret;
